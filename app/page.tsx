@@ -1,69 +1,99 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import InvitationCover from "@/components/InvitationCover";
+import Countdown from "@/components/Countdown";
+import CoupleProfile from "@/components/CoupleProfile";
+import Gallery from "@/components/Gallery";
+import WeddingGift from "@/components/WeddingGift";
+import RSVP from "@/components/RSVP";
+import MusicPlayer from "@/components/MusicPlayer";
 
 export default function Home() {
+  const [isOpened, setIsOpened] = useState(false);
+
+  const handleOpenInvitation = () => {
+    setIsOpened(true);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="min-h-screen bg-stone-50 text-stone-800 flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+      {/* Cover Depan (Hilang setelah tombol Buka Undangan diklik) */}
+      {!isOpened && (
+        <InvitationCover
+          coupleName="Romeo & Juliet"
+          weddingDate="12 Desember 2026"
+          onOpen={handleOpenInvitation}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+      )}
+
+      {/* Pemutar Musik Latar */}
+      <MusicPlayer autoPlayTrigger={isOpened} />
+
+      {/* Konten Utama Undangan (Muncul setelah cover dibuka) */}
+      {isOpened && (
+        <div className="max-w-xl w-full bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-stone-100 animate-fadeIn">
+          <span className="text-sm uppercase tracking-widest text-amber-600 font-medium">
+            Undangan Pernikahan
+          </span>
+
+          <h1 className="text-4xl md:text-5xl font-serif text-stone-900 mt-4 mb-2">
+            Romeo & Juliet
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="text-stone-500 italic mb-6">
+            Kami mengundang Anda untuk berbagi kebahagiaan di hari istimewa kami.
           </p>
+
+          {/* Component Countdown Timer */}
+          <Countdown targetDate="2026-12-12T09:00:00" />
+
+          {/* Profil Mempelai */}
+          <CoupleProfile />
+
+          {/* Detail Acara */}
+          <div className="bg-stone-50 p-6 rounded-xl border border-stone-200 mb-8 space-y-2">
+            <p className="font-semibold text-lg text-stone-800">
+              Sabtu, 12 Desember 2026
+            </p>
+            <p className="text-stone-600 text-sm">Pukul 09.00 WIB - Selesai</p>
+            <p className="text-stone-500 text-xs mt-2">
+              Gedung Serbaguna Jakarta
+            </p>
+          </div>
+
+          {/* Tombol Aksi */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="#rsvp"
+              className="px-6 py-3 bg-amber-700 hover:bg-amber-800 text-white rounded-lg font-medium transition shadow-sm"
+            >
+              Konfirmasi Kehadiran
+            </a>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg font-medium transition"
+            >
+              Lihat Lokasi
+            </a>
+          </div>
+
+          {/* Galeri Foto */}
+          <Gallery />
+
+          {/* Amplop Digital */}
+          <WeddingGift />
+
+          {/* Section RSVP & Buku Tamu */}
+          <RSVP />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      )}
+
+      <footer className="mt-8 text-xs text-stone-400">
+        Powered by <span className="font-semibold text-stone-600">Momen Ria</span>
+      </footer>
+    </main>
   );
 }
